@@ -50,17 +50,19 @@
       document.execCommand(command, false, null);
     }
 
-    // ダウンロード機能 (プレーンテキスト形式)
+    // ダウンロード機能 (ファイル名指定 + デフォルト対応)
     function downloadText() {
       const editorContent = document.getElementById('editor').innerText;
+      let fileName = prompt("保存するファイル名を入力してください（拡張子不要）:", "text-editor-content");
+      fileName = fileName ? fileName.trim() : "text-editor-content"; // 入力が空の場合はデフォルト名を使用
       const blob = new Blob([editorContent], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = 'text-editor-content.txt';
+      a.download = fileName + ".txt"; // 拡張子を自動追加
       a.click();
     }
 
-    // アップロード機能 (プレーンテキスト読み込み)
+    // アップロード機能
     function uploadText() {
       const fileInput = document.getElementById('fileInput');
       const file = fileInput.files[0];
