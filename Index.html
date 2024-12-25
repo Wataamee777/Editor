@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>テキストエディタ</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+    }
+    #toolbar {
+      margin-bottom: 10px;
+    }
+    #editor {
+      width: 80%;
+      height: 60%;
+      border: 1px solid #ccc;
+      padding: 10px;
+      background: white;
+      overflow-y: auto;
+    }
+    button {
+      margin: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div id="toolbar">
+    <button onclick="execCommand('bold')">太字</button>
+    <button onclick="execCommand('italic')">斜体</button>
+    <button onclick="execCommand('underline')">下線</button>
+    <button onclick="execCommand('undo')">元に戻す</button>
+    <button onclick="execCommand('redo')">やり直す</button>
+    <button onclick="downloadText()">ダウンロード</button>
+    <input type="file" id="fileInput" accept=".txt" onchange="uploadText()" hidden>
+    <button onclick="document.getElementById('fileInput').click()">アップロード</button>
+  </div>
+  <div id="editor" contenteditable="true">ここにテキストを入力してください。</div>
+
+  <script>
+    function execCommand(command) {
+      document.execCommand(command, false, null);
+    }
+
+    // ダウンロード機能 (プレーンテキスト形式)
+    function downloadText() {
+      const editorContent = document.getElementById('editor').innerText;
+      const blob = new Blob([editorContent], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'text-editor-content.txt';
+      a.click();
+    }
+
+    // アップロード機能 (プレーンテキスト読み込み)
+    function uploadText() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          document.getElementById('editor').innerText = e.target.result;
+        };
+        reader.readAsText(file);
+      }
+    }
+  </script>
+</body>
+</html>
