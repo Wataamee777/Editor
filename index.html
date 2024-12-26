@@ -97,7 +97,7 @@
     // ダウンロード機能 (ファイル名指定 + デフォルト対応)
     function downloadText() {
       const editorContent = document.getElementById('editor').innerText;
-      let fileName = prompt("保存するファイル名を入力してください（拡張子不要）:", "text-editor-content");
+      let fileName = prompt("保存するファイル名を入力してください（拡張子不要）:", "text_editor");
       fileName = fileName ? fileName.trim() : "text_editor"; // 入力が空の場合はデフォルト名を使用
       const blob = new Blob([editorContent], { type: 'text/plain' });
       const a = document.createElement('a');
