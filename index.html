@@ -25,7 +25,21 @@
       color: #333;
     }
     #toolbar {
+      display: flex; /* 横並びにする */
+      flex-wrap: wrap; /* 画面幅に応じて折り返す */
+      justify-content: center;
       margin-bottom: 10px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    button i {
+      margin-right: 5px; /* アイコンとテキストの間に余白 */
     }
     #editor {
       width: 80%;
@@ -39,17 +53,6 @@
     }
     #editor.placeholder {
       color: #888;
-    }
-    button {
-      margin: 2px;
-      padding: 5px 10px;
-      font-size: 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-    button i {
-      margin-right: 5px; /* アイコンとテキストの間に余白 */
     }
   </style>
 </head>
