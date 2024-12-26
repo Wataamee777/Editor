@@ -39,22 +39,37 @@
 </head>
 <body>
   <div id="toolbar">
-    <button onclick="execCommand('bold')">太字</button>
-    <button onclick="execCommand('italic')">斜体</button>
-    <button onclick="execCommand('underline')">下線</button>
-    <button onclick="execCommand('undo')">元に戻す</button>
-    <button onclick="execCommand('redo')">やり直す</button>
-    <button onclick="downloadText()">ダウンロード</button>
+    <button onclick="playClickSound(); execCommand('bold')">太字</button>
+    <button onclick="playClickSound(); execCommand('italic')">斜体</button>
+    <button onclick="playClickSound(); execCommand('underline')">下線</button>
+    <button onclick="playClickSound(); execCommand('undo')">元に戻す</button>
+    <button onclick="playClickSound(); execCommand('redo')">やり直す</button>
+    <button onclick="playClickSound(); downloadText()">ダウンロード</button>
     <input type="file" id="fileInput" accept=".txt" onchange="uploadText()" hidden>
-    <button onclick="document.getElementById('fileInput').click()">アップロード</button>
-    <button onclick="changeTextColor('black')">黒</button>
-    <button onclick="changeTextColor('red')">赤</button>
-    <button onclick="changeTextColor('blue')">青</button>
-    <button onclick="changeTextColor('yellow')">黄色</button>
+    <button onclick="playClickSound(); document.getElementById('fileInput').click()">アップロード</button>
+    <button onclick="playClickSound(); changeTextColor('black')">黒</button>
+    <button onclick="playClickSound(); changeTextColor('red')">赤</button>
+    <button onclick="playClickSound(); changeTextColor('blue')">青</button>
+    <button onclick="playClickSound(); changeTextColor('yellow')">黄色</button>
   </div>
   <div id="editor" class="placeholder" contenteditable="true" onfocus="clearPlaceholder()" onblur="setPlaceholder()">ここにテキストを入れてください。</div>
 
+  <!-- SoundCloudの音声ファイルを埋め込む -->
+  <iframe width="0" height="0" style="display:none;" src="https://on.soundcloud.com/Q5XKMSnEVLjD1pii8"></iframe>
+
   <script>
+    // クリック音を再生
+    function playClickSound() {
+      var iframe = document.querySelector('iframe');
+      var iframeSrc = iframe.src;
+
+      // SoundCloud音声が埋め込まれていれば再生
+      if (iframeSrc) {
+        var audio = new Audio(iframeSrc);
+        audio.play();
+      }
+    }
+
     function execCommand(command) {
       document.execCommand(command, false, null);
     }
