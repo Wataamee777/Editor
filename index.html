@@ -14,7 +14,7 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
-      background-color: #f4f4f4;
+      background-color: #87CEEB; /* 水色 */
     }
     #toolbar {
       margin-bottom: 10px;
@@ -26,6 +26,11 @@
       padding: 10px;
       background: white;
       overflow-y: auto;
+      color: #000;
+      font-size: 16px;
+    }
+    #editor.placeholder {
+      color: #888;
     }
     button {
       margin: 2px;
@@ -42,8 +47,12 @@
     <button onclick="downloadText()">ダウンロード</button>
     <input type="file" id="fileInput" accept=".txt" onchange="uploadText()" hidden>
     <button onclick="document.getElementById('fileInput').click()">アップロード</button>
+    <button onclick="changeTextColor('black')">黒</button>
+    <button onclick="changeTextColor('red')">赤</button>
+    <button onclick="changeTextColor('blue')">青</button>
+    <button onclick="changeTextColor('yellow')">黄色</button>
   </div>
-  <div id="editor" contenteditable="true">ここにテキストを入力してください。</div>
+  <div id="editor" class="placeholder" contenteditable="true" onfocus="clearPlaceholder()" onblur="setPlaceholder()">ここにテキストを入れてください。</div>
 
   <script>
     function execCommand(command) {
@@ -73,6 +82,29 @@
         };
         reader.readAsText(file);
       }
+    }
+
+    // プレースホルダーテキストを消す
+    function clearPlaceholder() {
+      const editor = document.getElementById('editor');
+      if (editor.innerText === "ここにテキストを入れてください。") {
+        editor.innerText = "";
+        editor.classList.remove('placeholder');
+      }
+    }
+
+    // プレースホルダーテキストを戻す（空の場合）
+    function setPlaceholder() {
+      const editor = document.getElementById('editor');
+      if (editor.innerText.trim() === "") {
+        editor.innerText = "ここにテキストを入れてください。";
+        editor.classList.add('placeholder');
+      }
+    }
+
+    // 文字色変更
+    function changeTextColor(color) {
+      document.execCommand('foreColor', false, color);
     }
   </script>
 </body>
