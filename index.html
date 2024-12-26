@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>テキストエディタ</title>
+  <!-- Favicon設定 -->
+  <link rel="icon" href="https://raw.githubusercontent.com/Wataamee777/Editor/refs/heads/main/Memo_icon.png" type="image/png">
+  <!-- スタイル設定 -->
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -15,6 +18,11 @@
       justify-content: center;
       height: 100vh;
       background-color: #87CEEB; /* 水色 */
+    }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #333;
     }
     #toolbar {
       margin-bottom: 10px;
@@ -34,29 +42,38 @@
     }
     button {
       margin: 2px;
+      padding: 5px 10px;
+      font-size: 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    button i {
+      margin-right: 5px; /* アイコンとテキストの間に余白 */
     }
   </style>
 </head>
 <body>
+  <h1>テキストエディタ</h1>
   <div id="toolbar">
-    <button onclick="playClickSound(); execCommand('bold')">太字</button>
-    <button onclick="playClickSound(); execCommand('italic')">斜体</button>
-    <button onclick="playClickSound(); execCommand('underline')">下線</button>
-    <button onclick="playClickSound(); execCommand('undo')">元に戻す</button>
-    <button onclick="playClickSound(); execCommand('redo')">やり直す</button>
-    <button onclick="playClickSound(); downloadText()">ダウンロード</button>
+    <button onclick="playClickSound(); execCommand('bold')"><i class="fas fa-bold"></i>太字</button>
+    <button onclick="playClickSound(); execCommand('italic')"><i class="fas fa-italic"></i>斜体</button>
+    <button onclick="playClickSound(); execCommand('underline')"><i class="fas fa-underline"></i>下線</button>
+    <button onclick="playClickSound(); execCommand('undo')"><i class="fas fa-undo"></i>元に戻す</button>
+    <button onclick="playClickSound(); execCommand('redo')"><i class="fas fa-redo"></i>やり直す</button>
+    <button onclick="playClickSound(); downloadText()"><i class="fas fa-download"></i>ダウンロード</button>
     <input type="file" id="fileInput" accept=".txt" onchange="uploadText()" hidden>
-    <button onclick="playClickSound(); document.getElementById('fileInput').click()">アップロード</button>
-    <button onclick="playClickSound(); changeTextColor('black')">黒</button>
-    <button onclick="playClickSound(); changeTextColor('red')">赤</button>
-    <button onclick="playClickSound(); changeTextColor('blue')">青</button>
-    <button onclick="playClickSound(); changeTextColor('yellow')">黄色</button>
+    <button onclick="playClickSound(); document.getElementById('fileInput').click()"><i class="fas fa-upload"></i>アップロード</button>
+    <button onclick="playClickSound(); changeTextColor('black')"><i class="fas fa-font" style="color:black;"></i>黒</button>
+    <button onclick="playClickSound(); changeTextColor('red')"><i class="fas fa-font" style="color:red;"></i>赤</button>
+    <button onclick="playClickSound(); changeTextColor('blue')"><i class="fas fa-font" style="color:blue;"></i>青</button>
+    <button onclick="playClickSound(); changeTextColor('yellow')"><i class="fas fa-font" style="color:yellow;"></i>黄色</button>
   </div>
   <div id="editor" class="placeholder" contenteditable="true" onfocus="clearPlaceholder()" onblur="setPlaceholder()">ここにテキストを入れてください。</div>
 
   <!-- 音声ファイル -->
   <audio id="clickSound" preload="auto">
-    <source src="https://www.dropbox.com/scl/fi/tpuknw83ghr2t5yo5zonv/click-sound.mp3?rlkey=203x6y3nagk6wrdswrv96btkd&st=0v69v7e2&dl=1" type="audio/mp3">
+    <source src="https://www.dropbox.com/scl/fi/tpuknw83ghr2t5yo5zonv/click-sound.mp3?raw=1" type="audio/mp3">
     あなたのブラウザは音声をサポートしていません。
   </audio>
 
@@ -76,7 +93,7 @@
     function downloadText() {
       const editorContent = document.getElementById('editor').innerText;
       let fileName = prompt("保存するファイル名を入力してください（拡張子不要）:", "text-editor-content");
-      fileName = fileName ? fileName.trim() : "text-editor-content"; // 入力が空の場合はデフォルト名を使用
+      fileName = fileName ? fileName.trim() : "text_editor"; // 入力が空の場合はデフォルト名を使用
       const blob = new Blob([editorContent], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
