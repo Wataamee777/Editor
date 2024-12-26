@@ -85,7 +85,9 @@
     function playClickSound() {
       var audio = document.getElementById("clickSound");
       audio.currentTime = 0; // 再生位置をリセット
-      audio.play();
+      audio.play().catch(function(e) {
+        console.log("音声再生エラー:", e); // 再生エラーのログ
+      });
     }
 
     function execCommand(command) {
