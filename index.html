@@ -54,20 +54,18 @@
   </div>
   <div id="editor" class="placeholder" contenteditable="true" onfocus="clearPlaceholder()" onblur="setPlaceholder()">ここにテキストを入れてください。</div>
 
-  <!-- SoundCloudの音声ファイルを埋め込む -->
-  <iframe width="0" height="0" style="display:none;" src="https://on.soundcloud.com/Q5XKMSnEVLjD1pii8"></iframe>
+  <!-- 音声ファイル -->
+  <audio id="clickSound" preload="auto">
+    <source src="https://www.dropbox.com/scl/fi/tpuknw83ghr2t5yo5zonv/click-sound.mp3?rlkey=203x6y3nagk6wrdswrv96btkd&st=0v69v7e2&dl=1" type="audio/mp3">
+    あなたのブラウザは音声をサポートしていません。
+  </audio>
 
   <script>
     // クリック音を再生
     function playClickSound() {
-      var iframe = document.querySelector('iframe');
-      var iframeSrc = iframe.src;
-
-      // SoundCloud音声が埋め込まれていれば再生
-      if (iframeSrc) {
-        var audio = new Audio(iframeSrc);
-        audio.play();
-      }
+      var audio = document.getElementById("clickSound");
+      audio.currentTime = 0; // 再生位置をリセット
+      audio.play();
     }
 
     function execCommand(command) {
@@ -78,7 +76,7 @@
     function downloadText() {
       const editorContent = document.getElementById('editor').innerText;
       let fileName = prompt("保存するファイル名を入力してください（拡張子不要）:", "text-editor-content");
-      fileName = fileName ? fileName.trim() : "text-editor"; // 入力が空の場合はデフォルト名を使用
+      fileName = fileName ? fileName.trim() : "text-editor-content"; // 入力が空の場合はデフォルト名を使用
       const blob = new Blob([editorContent], { type: 'text/plain' });
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
